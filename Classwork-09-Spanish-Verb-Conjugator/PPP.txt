@@ -1,0 +1,40 @@
+CLASSWORK #09 - SPANISH VERB CONJUGATOR
+PPP
+
+# Define the list of pronouns, in a fixed order
+pronouns <- ["yo", "tu", "el", "nosotros", "vosotros", "ellos"]
+
+# Define the dictionary that holds the endings for each verb type
+
+endings <- {
+    "ar": ["o", "as", "a", "amos", "ais", "an"],
+    "er": ["o", "es", "e", "emos", "eis", "en"],
+    "ir": ["o", "es", "e", "imos", "is", "en"]
+}
+
+# INPUT
+PRINT "Ingrese verbo: "
+READ verb
+
+# PROCESS
+# Get the stem by removing the last two letters of the verb
+stem <- verb without its last two letters
+
+# Get the verb type by taking only the last two letters of the verb
+verb_type <- last two letters of verb
+
+# Use the verb type as a key to look up the matching list of endings
+ending_list <- endings[verb_type]
+
+# OUTPUT
+# Repeat once for every pronoun in the list, using the same position
+# (index) in both lists to keep pronoun and ending matched
+FOR position <- 0 TO length(pronouns) - 1 DO
+    current_pronoun <- pronouns[position]
+    current_ending <- ending_list[position]
+    conjugated_form <- stem joined with current_ending
+    PRINT current_pronoun, conjugated_form
+END FOR
+
+END
+
