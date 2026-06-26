@@ -1,0 +1,167 @@
+# PPP - Classwork #10
+# School Management System
+# Pseudocódigo en español: ← para asignar valores, # para comentarios.
+# No se usa sintaxis de Python; solo lenguaje natural.
+
+# ============================================================
+# PROCESO: Definir los datos iniciales del sistema
+# ============================================================
+
+# Diccionario con los 8 usuarios del sistema (6 alumnos, 1 maestro, 1 coordinador)
+usuarios ← {
+    'jperez'     : { contraseña: '1234', rol: 'alumno',      nombre: 'Juan Perez' },
+    'amartin'    : { contraseña: '1234', rol: 'alumno',      nombre: 'Ana Martin' },
+    'ltrochez'   : { contraseña: '1234', rol: 'alumno',      nombre: 'Luisa Trochez' },
+    'adiaz'      : { contraseña: '1234', rol: 'alumno',      nombre: 'Abraham Díaz' },
+    'sescamilla' : { contraseña: '1234', rol: 'alumno',      nombre: 'Stephan Escamilla' },
+    'jrojas'     : { contraseña: '1234', rol: 'alumno',      nombre: 'Jesse Rojas' },
+    'mlopez'     : { contraseña: '1234', rol: 'maestro',     nombre: 'Maria Lopez' },
+    'rgarcia'    : { contraseña: '1234', rol: 'coordinador', nombre: 'Rosa Garcia' }
+}
+
+# Tupla con las materias del cuatrimestre (se mantiene fija durante toda la ejecución)
+materias ← ( 'Matematicas', 'Programación', 'Ingles II', 'Social-Emotional Skills', 'Arquitectura', 'Calculo' )
+
+# Diccionario con las calificaciones de cada alumno, organizadas por materia
+calificaciones ← {
+    'jperez'     : { Matematicas: 9.0, Programación: 8.7, Ingles II: 8.5, Social-Emotional Skills: 7.0, Arquitectura: 6.0, Calculo: 7.5 },
+    'amartin'    : { Matematicas: 9.0, Programación: 8.0, Ingles II: 7.5, Social-Emotional Skills: 9.0, Arquitectura: 6.0, Calculo: 9.5 },
+    'ltrochez'   : { Matematicas: 10.0, Programación: 8.9, Ingles II: 8.9, Social-Emotional Skills: 9.0, Arquitectura: 9.0, Calculo: 8.7 },
+    'adiaz'      : { Matematicas: 9.0, Programación: 9.7, Ingles II: 9.5, Social-Emotional Skills: 9.0, Arquitectura: 9.0, Calculo: 9.5 },
+    'sescamilla' : { Matematicas: 9.0, Programación: 8.7, Ingles II: 8.5, Social-Emotional Skills: 7.0, Arquitectura: 9.6, Calculo: 8.5 },
+    'jrojas'     : { Matematicas: 9.0, Programación: 8.7, Ingles II: 8.5, Social-Emotional Skills: 6.0, Arquitectura: 8.0, Calculo: 9.5 }
+}
+
+# ============================================================
+# PROCESO: Ciclo de inicio de sesión
+# ============================================================
+
+# Bandera que controla si ya se logró entrar al sistema
+sesion_activa ← Falso
+
+MIENTRAS sesion_activa sea igual a Falso HACER
+
+    # Pedir las credenciales de acceso
+    usuario_ingresado ← pedir al usuario "Usuario: "
+    clave_ingresada ← pedir al usuario "Contraseña: "
+
+    # Verificar que el usuario exista y que la contraseña coincida
+    SI usuario_ingresado está registrado en usuarios Y la contraseña guardada para ese usuario es igual a clave_ingresada ENTONCES
+
+        sesion_activa ← Verdadero
+        rol_usuario ← rol guardado para usuario_ingresado
+        nombre_usuario ← nombre guardado para usuario_ingresado
+
+    SINO
+
+        imprimir "Usuario o contraseña incorrectos. Intenta de nuevo."
+
+    FIN SI
+
+FIN MIENTRAS
+
+imprimir "Bienvenido, " + nombre_usuario + " (" + rol_usuario + ")"
+
+# ============================================================
+# DECISIÓN: Ramificación según el rol de quien inició sesión
+# ============================================================
+
+SI rol_usuario es igual a "alumno" ENTONCES
+
+    imprimir "Boleta de " + nombre_usuario
+
+    # Conjunto donde se guardarán las materias con calificación aprobatoria
+    materias_aprobadas ← conjunto vacío
+
+    PARA CADA materia_actual EN materias HACER
+
+        calificacion_actual ← calificación de usuario_ingresado en materia_actual
+
+        imprimir materia_actual + ": " + calificacion_actual
+
+        SI calificacion_actual es mayor o igual a 8.0 ENTONCES
+            agregar materia_actual a materias_aprobadas
+        FIN SI
+
+    FIN PARA
+
+    # Las materias pendientes son todas las que no quedaron en aprobadas
+    materias_pendientes ← conjunto(materias) menos materias_aprobadas
+
+    SI materias_aprobadas no está vacío ENTONCES
+        imprimir "Materias aprobadas: " + materias_aprobadas
+    SINO
+        imprimir "Materias aprobadas: Ninguna"
+    FIN SI
+
+    SI materias_pendientes no está vacío ENTONCES
+        imprimir "Materias pendientes: " + materias_pendientes
+    SINO
+        imprimir "Materias pendientes: Ninguna"
+    FIN SI
+
+SINO SI rol_usuario es igual a "maestro" ENTONCES
+
+    imprimir "Lista de alumnos:"
+
+    PARA CADA clave_usuario EN usuarios HACER
+        SI rol guardado para clave_usuario es igual a "alumno" ENTONCES
+            imprimir clave_usuario + " - " + nombre guardado para clave_usuario
+        FIN SI
+    FIN PARA
+
+    # Variable que controla si el maestro desea seguir calificando
+    seguir_calificando ← 's'
+
+    MIENTRAS seguir_calificando sea igual a 's' HACER
+
+        alumno_seleccionado ← pedir al usuario "Alumno (usuario): "
+
+        MIENTRAS alumno_seleccionado no esté en calificaciones HACER
+            imprimir "Ese alumno no existe."
+            alumno_seleccionado ← pedir al usuario "Alumno (usuario): "
+        FIN MIENTRAS
+
+        materia_seleccionada ← pedir al usuario "Materia: "
+
+        MIENTRAS materia_seleccionada no esté en materias HACER
+            imprimir "Esa materia no existe."
+            materia_seleccionada ← pedir al usuario "Materia: "
+        FIN MIENTRAS
+
+        calificacion_nueva ← pedir al usuario "Nueva calificación: " (convertir a número decimal)
+
+        calificaciones[alumno_seleccionado][materia_seleccionada] ← calificacion_nueva
+
+        imprimir "Calificación actualizada."
+
+        seguir_calificando ← pedir al usuario "¿Calificar a otro alumno? (s/n): "
+
+    FIN MIENTRAS
+
+SINO SI rol_usuario es igual a "coordinador" ENTONCES
+
+    imprimir "Lista de maestros:"
+    PARA CADA clave_usuario EN usuarios HACER
+        SI rol guardado para clave_usuario es igual a "maestro" ENTONCES
+            imprimir clave_usuario + " - " + nombre guardado para clave_usuario
+        FIN SI
+    FIN PARA
+
+    imprimir "Lista de materias:"
+    PARA CADA materia_actual EN materias HACER
+        imprimir materia_actual
+    FIN PARA
+
+    imprimir "Lista de alumnos con sus calificaciones:"
+    PARA CADA alumno_actual EN calificaciones HACER
+
+        imprimir nombre guardado para alumno_actual + " (" + alumno_actual + "):"
+
+        PARA CADA materia_actual EN materias HACER
+            imprimir "  " + materia_actual + ": " + calificaciones[alumno_actual][materia_actual]
+        FIN PARA
+
+    FIN PARA
+
+FIN SI
