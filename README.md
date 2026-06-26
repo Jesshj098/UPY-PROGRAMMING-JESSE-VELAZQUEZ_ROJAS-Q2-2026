@@ -8,6 +8,10 @@ CW08 - Numerical Integration
 
 La tarea contiene un programa en Python que aproxima integrales definidas utilizando distintos métodos de integración numérica.
 
+CW09 - Spanish Verb Conjugator
+
+This project is a Spanish Verb Conjugator developed in Python. It allows the user to conjugate Spanish verbs according to the selected mode. The project includes pseudocode, a flowchart, and the Python implementation following the class requirements.
+
 ----DECLARACIÓN DE IA----
 
 Yo, Jesse Velazquez Rojas, declaro que NO he utilizado herramientas de Inteligencia Artificial para la elaboración de este trabajo académico. Afirmo que cuento con evidencias físicas y/o digitales que demuestran mi autoría, incluyendo pero no limitándose a: documentos manuscritos, materiales impresos con anotaciones o subrayado, historial de versiones de documentos electrónicos, o commits en repositorios de código.   Reconozco y acepto que el profesor se reserva el derecho de solicitar dichas evidencias en cualquier momento, especialmente cuando existan sospechas o se detecten conductas que atenten contra la integridad académica, tales como plagio o uso no reportado de herramientas de IA.
