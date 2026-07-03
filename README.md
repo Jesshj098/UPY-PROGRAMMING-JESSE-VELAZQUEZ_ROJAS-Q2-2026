@@ -12,6 +12,11 @@ CW09 - Spanish Verb Conjugator
 
 This project is a Spanish Verb Conjugator developed in Python. It allows the user to conjugate Spanish verbs according to the selected mode. The project includes pseudocode, a flowchart, and the Python implementation following the class requirements.
 
+CW10
+
+CW11 - The Mandelbrot Set
+
+In this activity, a Python program is used to calculate the Mandelbrot Set. The program reads parameters from a configuration file, processes each point in a grid using complex numbers, and stores the iteration results in a CSV file.
 ----DECLARACIÓN DE IA----
 
 Yo, Jesse Velazquez Rojas, declaro que NO he utilizado herramientas de Inteligencia Artificial para la elaboración de este trabajo académico. Afirmo que cuento con evidencias físicas y/o digitales que demuestran mi autoría, incluyendo pero no limitándose a: documentos manuscritos, materiales impresos con anotaciones o subrayado, historial de versiones de documentos electrónicos, o commits en repositorios de código.   Reconozco y acepto que el profesor se reserva el derecho de solicitar dichas evidencias en cualquier momento, especialmente cuando existan sospechas o se detecten conductas que atenten contra la integridad académica, tales como plagio o uso no reportado de herramientas de IA.
