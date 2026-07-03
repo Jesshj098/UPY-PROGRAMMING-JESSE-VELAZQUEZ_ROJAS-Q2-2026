@@ -1,0 +1,68 @@
+CLASSWORK #11 – THE MANDELBROT SET
+PPP
+
+# INPUT
+
+OPEN "config.txt" for reading
+CREATE empty dictionary config
+
+FOR each line in config.txt
+ SPLIT line using "=" into key and value
+ config[key] ← value converted to decimal number
+END FOR
+
+CLOSE "config.txt"
+
+ancho ← config["ancho"]
+alto ← config["alto"]
+real_min ← config["real_min"]
+real_max ← config["real_max"]
+imag_min ← config["imag_min"]
+imag_max ← config["imag_max"]
+max_iter ← config["max_iter"]
+
+# PROCESS
+
+OPEN "mandelbrot.csv" for writing
+WRITE "fila,columna,iteraciones" into file
+
+fila ← 0
+
+WHILE fila < alto
+
+ columna ← 0
+
+ WHILE columna < ancho
+
+  # Convert grid position into complex number
+  real ← real_min + (columna / ancho) × (real_max - real_min)
+  imag ← imag_min + (fila / alto) × (imag_max - imag_min)
+  c ← complex number using real and imag
+
+  # Mandelbrot iteration
+  z ← 0 + 0i
+  iteraciones ← 0
+
+  WHILE magnitude of z ≤ 2 AND iteraciones < max_iter
+   z ← (z × z) + c
+   iteraciones ← iteraciones + 1
+  END WHILE
+
+  WRITE fila, columna, iteraciones into CSV file
+
+  columna ← columna + 1
+
+ END WHILE
+
+ fila ← fila + 1
+
+END WHILE
+
+CLOSE "mandelbrot.csv"
+
+# OUTPUT
+
+GENERATE file "mandelbrot.csv" containing:
+fila, columna, iteraciones
+
+Each row stores the number of iterations needed for each point to escape.
