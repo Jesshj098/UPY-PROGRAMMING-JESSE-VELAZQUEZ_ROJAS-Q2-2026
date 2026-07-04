@@ -1,0 +1,54 @@
+# INPUT
+
+CREATE empty dictionary called config
+
+OPEN file "config.txt" for reading
+READ all lines from file
+FOR EACH line in lines
+    SPLIT line using "=" into parameter and value
+
+    IF value contains "." THEN
+        config[parameter] ← value as float
+    ELSE
+        config[parameter] ← value as integer
+    END IF
+END FOR
+
+CLOSE file
+
+OPEN file "mandelbrot.csv" for reading
+READ all lines into lineas
+CLOSE file
+
+REMOVE first line from lineas  # Remove header row
+
+# PROCESS
+
+max_iter ← config["max_iter"]
+ancho ← config["ancho"]
+alto ← config["alto"]
+
+CREATE new image in HSV mode with size (ancho, alto)
+
+FOR EACH linea in lineas
+    SPLIT linea using "," into row, column, iterations
+
+    row ← row as integer
+    column ← column as integer
+    iterations ← iterations as integer
+
+    IF iterations = max_iter THEN
+        brillo ← 40
+    ELSE
+        brillo ← (iterations / max_iter) × 255
+    END IF
+
+    SET pixel at (column, row) with HSV value (brillo, 255, 255)
+END FOR
+
+# OUTPUT
+
+CONVERT image from HSV to RGB
+SAVE image as "mandelbrot.png"
+
+DISPLAY "DONE"
