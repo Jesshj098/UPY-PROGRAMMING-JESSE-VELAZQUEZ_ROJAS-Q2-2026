@@ -22,6 +22,10 @@ CW12
 
 This program reads Mandelbrot iteration data from a CSV file and transforms it into a grayscale image using Python and Pillow.
 
+CW13
+
+Corrected versions of Classworks #07, #08, and #09, with error handling
+added using try/except and explicit validation for edge cases.
 
 ----DECLARACIÓN DE IA----
 
