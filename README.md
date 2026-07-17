@@ -27,6 +27,11 @@ CW13
 Corrected versions of Classworks #07, #08, and #09, with error handling
 added using try/except and explicit validation for edge cases.
 
+CW14
+
+Corrected versions of Classworks #10, #11, and #12, with error handling
+added using try/except and explicit validation for edge cases.
+
 ----DECLARACIÓN DE IA----
 
 Yo, Jesse Velazquez Rojas, declaro que NO he utilizado herramientas de Inteligencia Artificial para la elaboración de este trabajo académico. Afirmo que cuento con evidencias físicas y/o digitales que demuestran mi autoría, incluyendo pero no limitándose a: documentos manuscritos, materiales impresos con anotaciones o subrayado, historial de versiones de documentos electrónicos, o commits en repositorios de código.   Reconozco y acepto que el profesor se reserva el derecho de solicitar dichas evidencias en cualquier momento, especialmente cuando existan sospechas o se detecten conductas que atenten contra la integridad académica, tales como plagio o uso no reportado de herramientas de IA.
