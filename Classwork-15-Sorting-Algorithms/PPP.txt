@@ -1,0 +1,203 @@
+====================================================================
+PPP (Pseudocode Programming Process) - Sorting Algorithms & Visualizer
+====================================================================
+
+--------------------------------------------------------------------
+1. bubble_sort(numbers)
+--------------------------------------------------------------------
+Purpose: Sort a list of numbers into ascending order by repeatedly
+         swapping adjacent out-of-order elements.
+Input:   numbers - a list of numeric values, unsorted
+Output:  numbers - the same list, mutated in place, ascending order
+
+PSEUDOCODE:
+    FUNCTION bubble_sort(numbers)
+        n = LENGTH(numbers)
+        FOR sweep = 0 TO n - 1
+            FOR pair = 0 TO n - 2 - sweep
+                IF numbers[pair] > numbers[pair + 1] THEN
+                    SWAP numbers[pair] AND numbers[pair + 1]
+                END IF
+            END FOR
+        END FOR
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+2. insertion_sort(numbers)
+--------------------------------------------------------------------
+Purpose: Sort a list of numbers into ascending order by inserting each
+         element into its correct position within the already-sorted
+         portion of the list.
+Input:   numbers - a list of numeric values, unsorted
+Output:  numbers - the same list, mutated in place, ascending order
+
+PSEUDOCODE:
+    FUNCTION insertion_sort(numbers)
+        n = LENGTH(numbers)
+        FOR i = 1 TO n - 1
+            j = i
+            WHILE j > 0 AND numbers[j - 1] > numbers[j]
+                SWAP numbers[j - 1] AND numbers[j]
+                j = j - 1
+            END WHILE
+        END FOR
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+3. selection_sort(numbers)
+--------------------------------------------------------------------
+Purpose: Sort a list of numbers into ascending order by repeatedly
+         selecting the smallest remaining element and placing it at
+         the front of the unsorted portion.
+Input:   numbers - a list of numeric values, unsorted
+Output:  numbers - the same list, mutated in place, ascending order
+
+PSEUDOCODE:
+    FUNCTION selection_sort(numbers)
+        n = LENGTH(numbers)
+        FOR sweep = 0 TO n - 1
+            min_idx = sweep
+            FOR pair = sweep + 1 TO n - 1
+                IF numbers[pair] < numbers[min_idx] THEN
+                    min_idx = pair
+                END IF
+            END FOR
+            IF min_idx != sweep THEN
+                SWAP numbers[sweep] AND numbers[min_idx]
+            END IF
+        END FOR
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+4. draw_bars(numbers, selected)
+--------------------------------------------------------------------
+Purpose: Render one animation frame showing the current state of the
+         list as vertical bars, highlighting the bars currently being
+         compared or swapped.
+Input:   numbers  - current list of values to draw
+         selected - indices of bars to highlight (default: none)
+Output:  none (side effect: one frame drawn to the canvas)
+
+PSEUDOCODE:
+    FUNCTION draw_bars(numbers, selected)
+        CLEAR canvas
+        n = LENGTH(numbers)
+        bar_width = 10.0 / n
+        FOR i = 0 TO n - 1
+            x = i * bar_width + bar_width / 2
+            IF i IN selected THEN
+                color = RED
+            ELSE
+                color = BLUE
+            END IF
+            SET pen color TO color
+            DRAW filled rectangle AT x, height = numbers[i], width = bar_width * 0.9
+        END FOR
+        SHOW canvas, PAUSE 500 ms
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+5. bubble_sort_animated(numbers)
+--------------------------------------------------------------------
+Purpose: Perform bubble sort while drawing a frame before each
+         comparison and another after every swap, so the process can
+         be watched step by step.
+Input:   numbers - a list of numeric values, unsorted
+Output:  numbers - mutated in place, ascending order; animation shown
+
+PSEUDOCODE:
+    FUNCTION bubble_sort_animated(numbers)
+        SET canvas scale based on LENGTH(numbers) and MAX(numbers)
+        n = LENGTH(numbers)
+        FOR sweep = 0 TO n - 1
+            FOR pair = 0 TO n - 2 - sweep
+                CALL draw_bars(numbers, selected = (pair, pair + 1))
+                IF numbers[pair] > numbers[pair + 1] THEN
+                    SWAP numbers[pair] AND numbers[pair + 1]
+                    CALL draw_bars(numbers, selected = (pair, pair + 1))
+                END IF
+            END FOR
+        END FOR
+        CALL draw_bars(numbers)
+        SHOW canvas
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+6. insertion_sort_animated(numbers)
+--------------------------------------------------------------------
+Purpose: Perform insertion sort while drawing a frame before each
+         comparison and another after every swap, so each value can
+         be watched sliding into its correct position.
+Input:   numbers - a list of numeric values, unsorted
+Output:  numbers - mutated in place, ascending order; animation shown
+
+PSEUDOCODE:
+    FUNCTION insertion_sort_animated(numbers)
+        SET canvas scale based on LENGTH(numbers) and MAX(numbers)
+        n = LENGTH(numbers)
+        FOR i = 1 TO n - 1
+            j = i
+            WHILE j > 0
+                CALL draw_bars(numbers, selected = (j - 1, j))
+                IF numbers[j - 1] > numbers[j] THEN
+                    SWAP numbers[j - 1] AND numbers[j]
+                    CALL draw_bars(numbers, selected = (j - 1, j))
+                    j = j - 1
+                ELSE
+                    BREAK
+                END IF
+            END WHILE
+        END FOR
+        CALL draw_bars(numbers)
+        SHOW canvas
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+7. selection_sort_animated(numbers)
+--------------------------------------------------------------------
+Purpose: Perform selection sort while drawing a frame for each
+         comparison, each new minimum found, and each swap, so the
+         search for the minimum and the placement can be watched.
+Input:   numbers - a list of numeric values, unsorted
+Output:  numbers - mutated in place, ascending order; animation shown
+
+PSEUDOCODE:
+    FUNCTION selection_sort_animated(numbers)
+        SET canvas scale based on LENGTH(numbers) and MAX(numbers)
+        n = LENGTH(numbers)
+        FOR sweep = 0 TO n - 1
+            min_idx = sweep
+            FOR pair = sweep + 1 TO n - 1
+                CALL draw_bars(numbers, selected = (pair, min_idx))
+                IF numbers[pair] < numbers[min_idx] THEN
+                    min_idx = pair
+                    CALL draw_bars(numbers, selected = (pair, min_idx))
+                END IF
+            END FOR
+            IF min_idx != sweep THEN
+                CALL draw_bars(numbers, selected = (sweep, min_idx))
+                SWAP numbers[sweep] AND numbers[min_idx]
+                CALL draw_bars(numbers, selected = (sweep, min_idx))
+            END IF
+        END FOR
+        CALL draw_bars(numbers)
+        SHOW canvas
+    END FUNCTION
+
+
+--------------------------------------------------------------------
+8. Overall program flow
+--------------------------------------------------------------------
+PSEUDOCODE:
+    BEGIN main
+        numbers = GENERATE 10 random integers between 0 and 100
+        PRINT "Before:", numbers
+        CALL selection_sort_animated(numbers)   // active choice
+        PRINT "After:", numbers
+    END main
